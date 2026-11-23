@@ -1,0 +1,22 @@
+{$PRIMARY_DOMAIN} {
+    encode gzip zstd
+
+    reverse_proxy 127.0.0.1:3001 {
+        header_up Host {host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    header {
+        -Server
+        X-Content-Type-Options nosniff
+    }
+
+    log {
+        output file /var/log/caddy/primary-access.log {
+            roll_size 20mb
+            roll_keep 5
+        }
+    }
+}

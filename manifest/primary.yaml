@@ -1,0 +1,91 @@
+version: "1"
+kind: miner
+id: 0
+slug: primary-security-verifier
+protocol: generic
+name: Primary — Deterministic SSL & URL Verifier
+description: >
+  Deterministic primary-source verifier for SSL_VERIFICATION_CERT, URL_SCAN_VERDICT, and
+  URL_SAFE_GENERAL. Performs live node:tls X.509 certificate handshakes (catching expired,
+  self-signed, and hostname-mismatched certificates that Certificate Transparency logs miss)
+  and multi-source URL threat scanning (URLhaus, OpenPhish, standard GSB/EICAR fixtures,
+  punycode homographs, redirect unrolling, and live TLS validation). No LLM guesswork.
+base_url: https://REPLACE_WITH_PRIMARY_DOMAIN
+
+docs:
+  documentation: https://github.com/danielamodu/primary-miner
+
+limitations:
+  - code: MAX_PARAM_VALUE
+    message: Hostnames up to 253 chars and HTTP/HTTPS URLs up to 2048 chars; private/loopback IPs are blocked for SSRF safety.
+    param: url
+    property: length
+    value_num: 2048
+    operator: lte
+
+rate_limit_per_sec: 10
+cache_ttl_sec: 15
+circuit_threshold: 5
+circuit_cooldown_seconds: 30
+
+input_schema:
+  type: object
+  properties:
+    host:
+      type: string
+      description: Hostname for SSL_VERIFICATION_CERT (e.g. google.com, expired.badssl.com).
+    url:
+      type: string
+      description: Full HTTP or HTTPS URL for URL_SCAN_VERDICT and URL_SAFE_GENERAL.
+    question:
+      type: string
+      description: Optional natural-language question containing the target host or URL.
+
+output_schema:
+  type: object
+  properties:
+    certificate_valid:
+      type: boolean
+      description: Whether the live TLS certificate of host is currently valid and trusted.
+    safe:
+      type: boolean
+      description: Whether the URL is safe to visit with no phishing or malware detected.
+    verdict:
+      type: string
+      description: Safety verdict enum (Safe, Suspicious, Malicious, Unknown).
+    detections:
+      type: integer
+      description: Number of threat engines or deterministic checks flagging the URL.
+    summary:
+      type: string
+      description: Concise plain-language summary of the primary-source verification result.
+    as_of:
+      type: string
+      description: ISO 8601 UTC timestamp of the live verification read.
+
+endpoints:
+  - path: /ssl-check
+    external_path: /ssl-check
+    method: GET
+    description: Live TLS X.509 certificate verification (?host=example.com or ?question=...).
+  - path: /url-scan
+    external_path: /url-scan
+    method: GET
+    description: Deterministic URL phishing and malware scan returning safe bool (?url=https://... or ?question=...).
+  - path: /url-safe
+    external_path: /url-safe
+    method: GET
+    description: Deterministic URL safety verdict returning verdict, detections, and summary (?url=https://...).
+
+semantics:
+  signal_mapping:
+    label_field: summary
+    reason_field: summary
+  supported_intents:
+    - URL_SCAN_VERDICT
+    - SSL_VERIFICATION_CERT
+    - URL_SAFE_GENERAL
+
+on_chain:
+  transform: direct
+  min_price_usdc: 0.01
