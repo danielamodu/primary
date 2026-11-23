@@ -10,10 +10,10 @@ description: >
   self-signed, and hostname-mismatched certificates that Certificate Transparency logs miss)
   and multi-source URL threat scanning (URLhaus, OpenPhish, standard GSB/EICAR fixtures,
   punycode homographs, redirect unrolling, and live TLS validation). No LLM guesswork.
-base_url: https://REPLACE_WITH_PRIMARY_DOMAIN
+base_url: https://13-60-129-92.sslip.io
 
 docs:
-  documentation: https://github.com/danielamodu/primary-miner
+  documentation: https://github.com/danielamodu/primary
 
 limitations:
   - code: MAX_PARAM_VALUE

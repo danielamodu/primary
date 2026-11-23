@@ -5,9 +5,9 @@
 set -euo pipefail
 
 PRIMARY_DOMAIN="${PRIMARY_DOMAIN:-}"
-REPO_URL="${REPO_URL:-https://github.com/danielamodu/primary-miner.git}"
+REPO_URL="${REPO_URL:-https://github.com/danielamodu/primary.git}"
 APP_DIR="${APP_DIR:-/opt/primary}"
-BRANCH="${BRANCH:-master}"
+BRANCH="${BRANCH:-main}"
 
 if [[ -z "$PRIMARY_DOMAIN" ]]; then
   echo "ERROR: PRIMARY_DOMAIN is required (e.g. PRIMARY_DOMAIN=primary-miner.duckdns.org)" >&2
