@@ -1,0 +1,23 @@
+{
+  "name": "primary-miner",
+  "version": "1.0.0",
+  "description": "Deterministic primary-source Telegraph Protocol miner for SSL_VERIFICATION_CERT, URL_SCAN_VERDICT, and URL_SAFE_GENERAL",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test test/ssl.test.ts test/url.test.ts",
+    "test:server": "node --import tsx --test test/server.test.ts",
+    "test:all": "node --import tsx --test test/*.test.ts",
+    "validate:manifest": "node scripts/validate-manifest.mjs"
+  },
+  "dependencies": {
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
