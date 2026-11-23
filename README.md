@@ -18,7 +18,7 @@
 
 ---
 
-## What is PRIMARY? (In Plain English)
+## What is PRIMARY?
 
 When an AI agent or app needs to know **"Is this website safe?"** or **"Is this site's security certificate actually valid right now?"**, it can pay a specialist bot ("Miner") on **Telegraph** (`$0.01`) to check.
 
@@ -31,7 +31,7 @@ When an AI agent or app needs to know **"Is this website safe?"** or **"Is this 
 
 ---
 
-## Try It Live (Copy & Paste in Terminal)
+## Live Endpoints
 
 No API key needed — test the live AWS EC2 server directly:
 
@@ -61,7 +61,7 @@ curl -sS "https://13-60-129-92.sslip.io/url-safe?url=https://xn--pple-43d.com/lo
 
 ---
 
-## Verified Benchmark Results (Honest & Reproducible)
+## Benchmark Results
 
 We ran **100 live security tests** directly against `https://13-60-129-92.sslip.io` ([full report](bench/results/BENCHMARK.md) & [raw JSON](bench/results/benchmark-100.json)):
 
@@ -77,7 +77,7 @@ We ran **100 live security tests** directly against `https://13-60-129-92.sslip.
 
 ---
 
-## 2-Minute Quickstart (Run It Locally)
+## Quickstart
 
 ```bash
 git clone https://github.com/danielamodu/primary.git && cd primary && npm ci && npm run typecheck && npm run test:all && npm run validate:manifest
